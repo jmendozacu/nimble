@@ -1,23 +1,36 @@
-Nimble 1.0
-------------------------------------------------------------------------
+Nimble 6
+========
+By Sam Peterson <sam.igknighted@gmail.com>
+
 A lightweight tool for managing a server for webhosting. Nimble manages
-the following.
+a webserver and email platform. User management is Linux centric.
+Instead of installing an FTP service, SFTP is expected to be used
+instead. Email is handled by Postfix and Dovecot. Web services are
+delivered with Apache, PHP, and MySQL 5.6.
 
-Web Services -
-FTP          -
-Mail         -
+The general philosophy is to manage the OS, not be it's own OS. The
+problem we have with cPanel is that it is pretty much it's own OS and
+parallels' Plesk Panel is designed to be multi-platform leaving quality
+to be lackluster. This version of Nimble is designed for RHEL 6 and
+CentOS 6. We don't support anything more than that. It gives us the
+ability to ensure the platform will be stable and work. To reflect the
+current platform Nimble support's, the naming convention matches the
+platform. This means that Nimble 6 is for RHEL/CentOS 6 and Nimble 7
+will be for RHEL/CentOS 7. 
 
-
-
+Installation
+============
+Just run the following command on your server to install Nimble.
+# cd / && yum install git -y && git clone https://github.com/Igknighted/nimble.git && /nimble/install
 
 
 LICENSING
 Everything inside of templates/src/ has separate licensing and have
 their own LICENSE files.
 
-Some libraries inside of webpanel/www/lib/ also have separate
+Some libraries inside of webpanel/www/lib/ likely also have separate
 licensing and will have their own LICENSE files in their respective
 directories.
 
-Nimble is dictated by the GNU GPL v3 license in the LICENSE file
+Nimble is licensed under the GNU GPL v3 license in the LICENSE file.
 
