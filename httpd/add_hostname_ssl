@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# Set some variables for readability... self-explanatory stuff
+USERNAME=$1
+HOSTNAME=$2
+IPADDR=$3
+
+
+# make sure people aren't being stupid
+if [ "$USERNAME" == "" ] || [ "$HOSTNAME" == "" ] || [ "$IPADDR" == ""]; then
+	echo
+	echo
+	echo This script is used to create new vhosts in /etc/httpd/vhosts.d/
+	echo
+	echo Usage:
+	echo $0 USERNAME HOSTNAME IPADDR
+	echo
+	echo
+	echo
+	exit
+fi
+
+# Make sure SSL cert and key exists
+if [ ! -f /etc/pki/tls/certs/$HOSTNAME.crt ] || [ ! -f /etc/pki/tls/private/$HOSTNAME.key ]; then
+	echo On of these files must be missing. I refuse to contribute to failure:
+	echo /etc/pki/tls/certs/$HOSTNAME.crt
+	echo /etc/pki/tls/private/$HOSTNAME.key
+	exit
+fi
+
+# copy our template file to a hold place
+cp -fv /nimble/templates/httpd/vhost-ssl.conf /dev/shm/$HOSTNAME-ssl.conf
+
+# set the username and hostname in the temporary conf file
+sed -i -e 's:__USERNAME__:'$USERNAME':g' /dev/shm/$HOSTNAME-ssl.conf
+sed -i -e 's:__HOSTNAME__:'$HOSTNAME':g' /dev/shm/$HOSTNAME-ssl.conf
+sed -i -e 's:__IPADDR__:'$IPADDR':g' /dev/shm/$HOSTNAME-ssl.conf
+
+# if our ca bundle doesn't exists, we will just comment out that line
+if [ ! -f /etc/pki/tls/certs/$HOSTNAME.ca.crt ]; then
+	sed -i -e 's:SSLCACertificateFile:#SSLCACertificateFile:g' /dev/shm/$HOSTNAME-ssl.conf
+fi
+
+# Move our temporary conf file into the vhosts.d
+cp -fv /dev/shm/$HOSTNAME-ssl.conf /etc/httpd/vhosts.d/$HOSTNAME-ssl.conf
+
+# cleanup useless stuff now
+rm -rfv /dev/shm/$HOSTNAME-ssl.conf
+
+# ensure it's not suspended
+rm -rfv /etc/httpd/vhosts/$HOSTNAME-ssl.suspended
+
+# ensure log directorie exist
+mkdir -p /var/log/httpd/$USERNAME
+
+# ensure log files exist
+touch /var/log/httpd/$USERNAME/$HOSTNAME-ssl-access_log
+touch /var/log/httpd/$USERNAME/$HOSTNAME-ssl-error_log
+
+# ensure ownerships 
+chown root:$USERNAME -Rv /var/log/httpd/$USERNAME
+
+# ensure that users can't delete their logs
+chmod u+r,u+w,u+x,g+r,g-w,g-x,o-r,o-w,o-x -Rv /var/log/httpd/$USERNAME
+
+# reload apache to recognize new vhost
+if [ -f /var/run/httpd/httpd.pid ]; then
+	service httpd reload
+fi

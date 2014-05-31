@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Create the nimble user for the nimble apache server instance
+useradd nimble -d /nimble/webpanel/www -s /sbin/nologin
+
+# ensure nimble has access to his homedir...
+chmod o+x /nimble
+chmod o+x /nimble/webpanel
+chmod o+x /nimble/webpanel/www
+chown -R nimble:nimble /nimble/webpanel/www
+chown :nimble /nimble/conf/mysql_password
+
+# We will link out custom httpd init.d script to be our nimble service script
+ln -s /nimble/etc/init.d/nimble /etc/init.d/nimble
+
+
+# Remove any instancest of vhosts.d include directory (avoiding duplicates)
+sed -i -e '/includedir \/etc\/sudoers.d/d' /etc/sudoers
+
+# Ensure we include vhosts.d conf files.
+echo '#includedir /etc/sudoers.d' >> /etc/sudoers
+
+
+
+# Setup sudoer permissions
+cp /nimble/templates/webpanel/sudoer.nimble /etc/sudoers.d/nimble
+chmod u=rwx,g=rx,o=rx /etc/sudoers.d/
+chmod u=r,g=r,o= /etc/sudoers.d/*
+
+# Make nimble auto start
+chkconfig nimble on
+
+# start nimble
+if [ -f /var/run/httpd/nimble.pid ]; then
+	service nimble restart
+else
+	service nimble start
+fi
+

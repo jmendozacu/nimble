@@ -1,0 +1,23 @@
+Nimble 1.0
+------------------------------------------------------------------------
+A lightweight tool for managing a server for webhosting. Nimble manages
+the following.
+
+Web Services -
+FTP          -
+Mail         -
+
+
+
+
+
+LICENSING
+Everything inside of templates/src/ has separate licensing and have
+their own LICENSE files.
+
+Some libraries inside of webpanel/www/lib/ also have separate
+licensing and will have their own LICENSE files in their respective
+directories.
+
+Nimble is dictated by the GNU GPL v3 license in the LICENSE file
+

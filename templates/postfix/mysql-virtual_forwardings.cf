@@ -1,0 +1,5 @@
+user = nimble
+password = __PASSWORD__
+dbname = nimble
+query = SELECT destination FROM mail_forwardings WHERE source='%s'
+hosts = localhost

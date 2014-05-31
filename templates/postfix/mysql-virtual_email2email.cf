@@ -1,0 +1,5 @@
+user = nimble
+password = __PASSWORD__
+dbname = nimble
+query = SELECT email FROM mail_users WHERE email='%s'
+hosts = localhost

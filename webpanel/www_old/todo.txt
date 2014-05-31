@@ -1,0 +1,21 @@
+The Nimble todo list
+--------------------
+Lets face it... I get bored of this shit quickly, so I have to itemize my objective lists.
+
+[ ] Make login interface
+- Database will dictate which system users are also nimble users
+- Administrative users are in nimble database only
+
+[ ] Administrative abilities
+- Create nimble users
+- Delete nimble users
+- Suspend nimble users
+- Unsuspend nimble users
+
+[ ] Nimble user abilities
+- Mange websites
+- Manage FTP users
+- Manage databases
+- Manage database users
+- Manage email accounts for websites
+

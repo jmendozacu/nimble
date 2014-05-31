@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Variables for human readability
+HOSTNAME=$1
+
+# Make sure people don't fuck up
+if [ "$HOSTNAME" == "" ]; then
+	echo
+	echo
+	echo
+	echo Used to suspend a hostname in /etc/httpd/vhosts.d/
+	echo
+	echo Usage:
+	echo
+	echo $0 HOSTNAME
+	echo
+	echo
+fi
+
+
+# We just change the file name.
+mv -v /etc/httpd/vhosts.d/$HOSTNAME.conf /etc/httpd/vhosts.d/$HOSTNAME.suspended
+mv -v /etc/httpd/vhosts.d/$HOSTNAME-ssl.conf /etc/httpd/vhosts.d/$HOSTNAME-ssl.suspended

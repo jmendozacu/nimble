@@ -1,0 +1,23 @@
+#!/bin/bash
+
+echo Ensuring MySQL tables for MyDNS are in nimble database...
+mydns --create-tables | mysql nimble
+
+echo Getting nible user mysql password
+NIMBLEPASS=$(cat /nimble/conf/mysql_password)
+
+echo Cofiguring MyDNS...
+echo Copying configuration template...
+cp -vf /nimble/templates/mydns/mydns.conf /etc/mydns.conf
+
+echo Setting nimble password in configuration
+/usr/bin/replace __PASSWORD__ $NIMBLEPASS -- /etc/mydns.conf
+
+echo Ensuring MyDNS service auto starts and is on
+chkconfig mydns on
+
+if [ -f /var/run/mydns.pid ]; then
+	service mydns restart
+else
+	service mydns start
+fi

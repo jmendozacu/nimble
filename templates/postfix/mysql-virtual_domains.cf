@@ -1,0 +1,5 @@
+user = nimble
+password = __PASSWORD__
+dbname = nimble
+query = SELECT domain AS virtual FROM mail_domains WHERE domain='%s'
+hosts = localhost

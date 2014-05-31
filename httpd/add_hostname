@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Set some variables for readability... self-explanatory stuff
+USERNAME=$1
+HOSTNAME=$2
+
+
+# make sure people aren't being stupid
+if [ "$USERNAME" == "" ] || [ "$HOSTNAME" == "" ]; then
+	echo
+	echo
+	echo This script is used to create new vhosts in /etc/httpd/vhosts.d/
+	echo
+	echo Usage:
+	echo $0 USERNAME HOSTNAME
+	echo
+	echo
+	echo
+	exit
+fi
+
+# copy our template file to a hold place
+cp -fv /nimble/templates/httpd/vhost.conf /dev/shm/$HOSTNAME.conf
+
+# set the username and hostname in the temporary conf file
+sed -i -e 's:__USERNAME__:'$USERNAME':g' /dev/shm/$HOSTNAME.conf
+sed -i -e 's:__HOSTNAME__:'$HOSTNAME':g' /dev/shm/$HOSTNAME.conf
+
+
+# Move our temporary conf file into the vhosts.d
+cp -fv /dev/shm/$HOSTNAME.conf /etc/httpd/vhosts.d/$HOSTNAME.conf
+
+# cleanup useless stuff now
+rm -rfv /dev/shm/$HOSTNAME.conf
+
+# ensure it's not suspended
+rm -rfv /etc/httpd/vhosts/$HOSTNAME.suspended
+
+# ensure log directorie exist
+mkdir -p /var/log/httpd/$USERNAME
+
+# ensure log files exist
+touch /var/log/httpd/$USERNAME/$HOSTNAME-access_log
+touch /var/log/httpd/$USERNAME/$HOSTNAME-error_log
+
+# ensure ownerships 
+chown root:$USERNAME -Rv /var/log/httpd/$USERNAME
+
+# ensure that users can't delete their logs
+chmod u+r,u+w,u+x,g+r,g-w,g-x,o-r,o-w,o-x -Rv /var/log/httpd/$USERNAME
+
+# reload apache to recognize new vhost
+if [ -f /var/run/httpd/httpd.pid ]; then
+	service httpd reload
+fi

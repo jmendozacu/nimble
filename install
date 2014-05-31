@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# ensure we have epel-release
+cat <<EOM >/etc/yum.repos.d/epel-bootstrap.repo
+[epel]
+name=Bootstrap EPEL
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-\$releasever&arch=\$basearch
+failovermethod=priority
+enabled=0
+gpgcheck=0
+EOM
+
+yum --enablerepo=epel -y install epel-release
+rm -f /etc/yum.repos.d/epel-bootstrap.repo
+
+
+# ensure we have ius-release
+cat <<EOM >/etc/yum.repos.d/ius-bootstrap.repo
+[ius]
+name=Bootstrap IUS
+baseurl=http://dl.iuscommunity.org/pub/ius/stable/Redhat/\$releasever/\$basearch/
+failovermethod=priority
+enabled=0
+gpgcheck=0
+EOM
+
+yum --enablerepo=ius -y install ius-release
+rm -f /etc/yum.repos.d/ius-bootstrap.repo
+
+
+# Secure permissions
+chmod -R u=rwx,g=rx,o= /nimble
+
+# Install all of our packages below
+yum -y install \
+vim gcc gcc-c++ make autoconf \
+httpd httpd-devel libcap-devel mod_ssl \
+mysql55-server mysql55 \
+php php-fpm php-mysql php-gd php-mcrypt php-xmlrpc php-xml php-mbstring \
+mydns mydns-mysql \
+dovecot dovecot-mysql
+
+# setup apache
+/nimble/httpd/setup
+
+# setup mysqld
+/nimble/mysql/setup
+
+# setup mydns
+/nimble/mydns/setup
+
+# setup mail
+/nimble/mail/setup
+
+# setup nimble webpanel
+/nimble/webpanel/setup
+
+

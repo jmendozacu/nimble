@@ -1,0 +1,71 @@
+#!/bin/bash
+PASS=$(openssl rand -base64 32)
+
+if [ $# -lt 7 ]; then
+	echo Not enough input;
+	echo
+	echo
+	echo Example usage;
+	echo "$0 COUNTRY STATE CITY ORGANIZATION_NAME ORGANIZATION_UNIT EMAILADDRESS DOMAIN_NO_WWW (more domains without www)"
+	echo COUNTRY must be the two letter universal abreviation
+	echo STATE must be full state name or province
+	exit;
+fi
+
+MAIN_DOMAIN=$(echo $7 | sed 's/www\.//ig');
+
+COMPANYDATA="/C=$1"
+COMPANYDATA="$COMPANYDATA/ST=$2"
+COMPANYDATA="$COMPANYDATA/L=$3"
+COMPANYDATA="$COMPANYDATA/O=$4"
+COMPANYDATA="$COMPANYDATA/OU=$5"
+COMPANYDATA="$COMPANYDATA/emailAddress=$6"
+
+for i in $(eval echo {7..$#}); do
+	val=$(eval echo \$$i | sed 's/www\.//ig');
+	
+	COMPANYDATA="$COMPANYDATA/CN=$val"
+	COMPANYDATA="$COMPANYDATA/CN=www.$val"
+done
+
+
+if [ ! -d /etc/pki/tls/certs ]; then
+	mkdir -p /etc/pki/tls/certs
+	chmod 640 /etc/pki/tls/certs
+fi
+
+if [ ! -d /etc/pki/tls/private ]; then
+	mkdir -p /etc/pki/tls/private
+	chmod 640 /etc/pki/tls/private
+fi
+
+if [ ! -d /etc/pki/tls/csr ]; then
+	mkdir -p /etc/pki/tls/csr
+	chmod 640 /etc/pki/tls/csr
+fi
+
+if [ ! -d /etc/pki/tls/pass ]; then
+	mkdir -p /etc/pki/tls/pass
+	chmod 640 /etc/pki/tls/pass
+fi
+
+# lock down proc to prevent people from viewing it
+if [ -d /proc ]; then
+	chmod 550 /proc
+fi
+
+
+openssl genrsa -aes128 -passout pass:$PASS 2048 > /etc/pki/tls/private/$MAIN_DOMAIN.key
+openssl rsa -in /etc/pki/tls/private/$MAIN_DOMAIN.key -out /etc/pki/tls/private/$MAIN_DOMAIN.key -passin pass:$PASS
+openssl req -utf8 -new -passin pass:$PASS -key /etc/pki/tls/private/$MAIN_DOMAIN.key -out /etc/pki/tls/csr/$MAIN_DOMAIN.csr -subj "$COMPANYDATA"
+openssl x509 -in /etc/pki/tls/csr/$MAIN_DOMAIN.csr -passin pass:$PASS -out /etc/pki/tls/certs/$MAIN_DOMAIN.crt -req -signkey /etc/pki/tls/private/$MAIN_DOMAIN.key -days 3650
+echo $PASS > /etc/pki/tls/pass/$MAIN_DOMAIN.pass
+
+chmod 640 /etc/pki/tls/private/$MAIN_DOMAIN.key
+chmod 640 /etc/pki/tls/csr/$MAIN_DOMAIN.csr
+chmod 640 /etc/pki/tls/certs/$MAIN_DOMAIN.crt
+
+# Unlock proc now
+if [ -d /proc ]; then
+	chmod 555 /proc
+fi

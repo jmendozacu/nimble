@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Add mod_ruid2
+cd /nimble/templates/src/mod-ruid2
+
+# Compile and enable mod_ruid2 in apache conf
+apxs -a -i -l cap -c mod_ruid2.c
+
+# Remove any instancest of vhosts.d include directory (avoiding duplicates)
+#sed -i -e 's:Include vhosts.d/\*.conf::g' /etc/httpd/conf/httpd.conf
+sed -i -e '/Include vhosts.d\/\*.conf/d' /etc/httpd/conf/httpd.conf
+
+# Ensure we include vhosts.d conf files.
+echo 'Include vhosts.d/*.conf' >> /etc/httpd/conf/httpd.conf
+
+# make sure that vhosts.d directory exists
+mkdir -p /etc/httpd/vhosts.d
+
+# Ensure welcome.conf is empty
+echo > /etc/httpd/conf.d/welcome.conf
+
+# Ensure apache is enabled on boot
+chkconfig httpd on
+
+# start or restart apache
+if [ -f /var/run/httpd/httpd.pid ]; then
+	service httpd restart
+else
+	service httpd start
+fi
