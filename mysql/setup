@@ -18,6 +18,9 @@ else
 	service mysqld start
 fi
 
+# Ensure that things aren't borked due to upgrade from mysql55 to mysql56u
+mysql_upgrade
+
 # generate a random passowrd
 PASS=$(openssl rand -base64 12)
 # This copy of the password is mysql query safe
