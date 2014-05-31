@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# Add mod_ruid2
-cd /nimble/templates/src/mod-ruid2
-
-# Compile and enable mod_ruid2 in apache conf
-apxs -a -i -l cap -c mod_ruid2.c
+# Compile and build things that we need.
+/nimble/httpd/rebuild_sources
 
 # Remove any instancest of vhosts.d include directory (avoiding duplicates)
 #sed -i -e 's:Include vhosts.d/\*.conf::g' /etc/httpd/conf/httpd.conf

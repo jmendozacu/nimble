@@ -1,0 +1,88 @@
+craft - Rapidly Development Environment
+=======================================
+License is GNU GPL v3
+Created by Sam Peterson <sam.igknighted@gmail.com>
+Usage: Used to swiftly make a modularized website with pretty URLs.
+
+Gettings Started
+----------------
+All public site scripts belong in the modules directory. There is a default example page
+  modules/default/index.php
+  modules/default/404.php
+  
+They are called by default when the homepage is accessed or when the page requested does 
+not exist. If we wanted to add a page, we would create a directory and files like so:
+  modules/mymod/index.php
+  modules/mymod/type_of_action.php
+
+They would be accessed like so from your website:
+  http://mysite.com/mymod/
+  http://mysite.com/mymod/index
+  - These two URLs take us to the module modules/mymod/index.php
+  
+  http://mysite.com/mymod/type_of_action
+  - This takes us to to the module modules/mymod/type_of_action.php
+
+
+You can also access get data by using the $mod_verbs variable. For example, lets say our
+url is http://mysite.com/mymod/type_of_action/page/1/2/3/4
+
+The mod_verbs variable will contain the following:
+  array(7) {
+    [0]=>
+    string(5) "mymod"
+    [1]=>
+    string(14) "type_of_action"
+    [2]=>
+    string(4) "page"
+    [3]=>
+    string(1) "1"
+    [4]=>
+    string(1) "2"
+    [5]=>
+    string(1) "3"
+    [6]=>
+    string(1) "4"
+  }
+
+
+
+If you ever question the verbs, just use this function that I've packed in
+to the global_functions.php script:
+  debug_verbs()
+
+
+
+Pre and Post Module Setup
+=========================
+If you need to do things before and after every module, like connecting to a database,
+edit them into files:
+  lib/premodule_staging.php
+  lib/postmodule_staging.php
+  
+
+Global Functions
+================
+  lib/global_functions.php
+
+
+External Libaries
+=================
+Put any external libraries in lib and include them in this file if they are always used.
+  lib/premodule_staging.php
+
+If the library is not always used, just use require_once in your script right before
+attempting to use it. This will reduce memory footprint bulk.
+
+
+Module Private Stuff
+====================
+Lets say you want to have private things included in your module. Slap the private stuff
+in lib/modules_private and use require_once(BASEPATH.'/lib/modules_private/MODULENAME/whatever.php')
+
+
+Last Word
+=========
+I built this simple framework for my projects, so no complaining. That is all.
+
+Thank you.

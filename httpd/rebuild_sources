@@ -1,0 +1,6 @@
+# Add mod_ruid2
+cd /nimble/templates/src/mod-ruid2
+
+# Compile and enable mod_ruid2 in apache conf
+apxs -a -i -l cap -c mod_ruid2.c
+
