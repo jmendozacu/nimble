@@ -21,7 +21,7 @@ will be for RHEL/CentOS 7.
 Installation
 ============
 Just run the following command on your server to install Nimble.
-# cd / && yum install git -y && git clone https://github.com/Igknighted/nimble.git && /nimble/install
+# cd / && yum install git -y; git clone https://github.com/Igknighted/nimble.git && /nimble/install
 
 
 LICENSING
