@@ -33,12 +33,15 @@ chmod -R u=rwx,g=rx,o= /nimble
 
 # Install all of our packages below
 yum -y install \
-vim gcc gcc-c++ make autoconf \
+vim gcc gcc-c++ make autoconf yum-plugin-replace \
 httpd httpd-devel libcap-devel mod_ssl \
-mysql55-server mysql55 \
+mysql-server mysql \
 php php-fpm php-mysql php-gd php-mcrypt php-xmlrpc php-xml php-mbstring \
 mydns mydns-mysql \
 dovecot dovecot-mysql
+
+# Upgrade to mysql56u so innodb doesn't suck..
+yum -y replace mysql --replace-with mysql56u
 
 # setup apache
 /nimble/httpd/setup
