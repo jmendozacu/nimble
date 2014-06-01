@@ -19,7 +19,6 @@ CREATE TABLE `dns_rr` (
   `ttl` int(10) unsigned NOT NULL DEFAULT '86400',
   `type` enum('A','AAAA','ALIAS','CNAME','HINFO','MX','NAPTR','NS','PTR','RP','SRV','TXT') DEFAULT NULL,
   `system_username` varchar(32) DEFAULT NULL,
-  `vhost_document_root` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rr` (`zone`,`name`,`type`,`data`),
   KEY `system_username` (`system_username`)
@@ -75,8 +74,10 @@ CREATE TABLE `mail_forwardings` (
 
 DROP TABLE IF EXISTS `mail_transport`;
 CREATE TABLE `mail_transport` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `domain` varchar(128) NOT NULL DEFAULT '',
   `transport` varchar(128) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `domain` (`domain`),
   KEY `domain_2` (`domain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -112,5 +113,19 @@ CREATE TABLE `nimble_users` (
   KEY `system_username` (`system_username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+--
+-- Table structure for table `website_vhosts`
+--
 
--- Dump completed on 2014-06-01  8:07:48
+DROP TABLE IF EXISTS `website_vhosts`;
+CREATE TABLE `website_vhosts` (
+  `vhost_id` int(11) NOT NULL AUTO_INCREMENT,
+  `system_username` varchar(32) NOT NULL,
+  `domain` varchar(200) NOT NULL,
+  `documentroot` text NOT NULL,
+  PRIMARY KEY (`vhost_id`),
+  KEY `system_username` (`system_username`,`domain`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- Dump completed on 2014-06-01  8:35:35
