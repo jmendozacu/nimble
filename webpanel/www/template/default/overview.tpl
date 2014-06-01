@@ -3,7 +3,7 @@
 
 <div id="body">
 	<p>Below is a list of controls that you have available.</p>
-	<p><a href="#">User Management</a> - Add, remove, and edit system user and their privileges.</p>
+	<p><a href="/users/">User Management</a> - Add, remove, and edit system user and their privileges.</p>
 	<p><a href="#">DNS Management</a> - Add, remove, and edit DNS entries.</p>
 	<p><a href="#">Website Management</a> - Add, remove, and edit vhosts.</p>
 	<p><a href="#">MySQL Management</a> - User and database management.</p>
