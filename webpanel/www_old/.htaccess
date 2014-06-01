@@ -1,9 +1,0 @@
-RewriteEngine On
-RewriteBase /
-
-# These are the real folders.
-RewriteRule ^resources/(.*)$ resources/$1 [L]
-RewriteRule ^docs/(.*)$ docs/$1 [L]
-
-# Catch all URL's. Don't put any rules below this one.
-RewriteRule ^(.*)$ index.php?mod_verbs=$1 [QSA,NC,L]

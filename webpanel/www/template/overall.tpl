@@ -16,7 +16,7 @@
 <!-- BEGIN: footer -->
 
 	<p class="footer">
-		Something about nimble here..,?
+		Powered by the <a href="https://github.com/Igknighted/nimble">Nimble</a> Web Panel
 	</p>
 </div>
 

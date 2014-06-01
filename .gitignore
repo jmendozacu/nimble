@@ -1,1 +1,3 @@
 conf/mysql_password
+/nimble/webpanel/www/cache/sessions
+!/nimble/webpanel/www/cache/sessions/note

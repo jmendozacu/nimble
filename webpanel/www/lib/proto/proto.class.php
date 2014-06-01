@@ -170,6 +170,10 @@ class Proto {
 		// Executing our query through the linker...
 		$this->last_query_result = $this->linker->query($query);
 
+		if(!$this->last_query_result){
+			echo "MySQL Error: ".$this->linker->error."<br>\n";
+		}
+
 		// Get the total and make us have rows... if we have some, lets look at the first one
 		if($this->count() > 0)
 			$this->next();
@@ -179,6 +183,8 @@ class Proto {
 	// Gives us a count of the number of rows from the last query
 	public function count()
 	{
+		if(!$this->last_query_result)
+			return 0;
 		return $this->last_query_result->num_rows;
 	}
 	
@@ -230,7 +236,12 @@ class Proto {
 			}
 			$final_statement .= "(".$fields.") VALUES (".$values.");";
 			
-			$this->linker->query($final_statement);
+			$err_check = $this->linker->query($final_statement);
+			if(!$err_check){
+				echo "MySQL Error: ".$this->linker->error."<br>\n";
+			}
+			
+
 			// now we will return only this one
 			$this->getData('WHERE `'.$this->primary_key.'` = "'.$this->linker->insert_id.'"');
 		// We will be saving this based on the primary key

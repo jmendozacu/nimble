@@ -3,6 +3,7 @@ RewriteBase /
 
 # These are the real files and folders we want to directly access.
 RewriteRule ^resources/(.*)$ resources/$1 [L]
+RewriteRule ^dba/(.*)$ dba/$1 [L]
 RewriteRule ^captcha.php$ captcha.php [L]
 
 # Catch all URL's. Don't put any rules below this one.

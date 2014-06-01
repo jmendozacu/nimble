@@ -5,16 +5,16 @@ NIMBLE_PASS=$(cat /nimble/conf/mysql_password)
 echo Ensuring creation of mail tables in nimble database
 
 #Create the virtual domains table with the following command:
-mysql nimble -e "CREATE TABLE mail_domains (domain varchar(50) NOT NULL, PRIMARY KEY (domain) );"
+#mysql nimble -e "CREATE TABLE mail_domains (domain varchar(50) NOT NULL, PRIMARY KEY (domain) );"
 
 #Create a table to handle mail forwarding with the following command:
-mysql nimble -e "CREATE TABLE mail_forwardings (source varchar(80) NOT NULL, destination TEXT NOT NULL, PRIMARY KEY (source) );"
+#mysql nimble -e "CREATE TABLE mail_forwardings (source varchar(80) NOT NULL, destination TEXT NOT NULL, PRIMARY KEY (source) );"
 
 #Create the users table with the following command:
-mysql nimble -e "CREATE TABLE mail_users (email varchar(80) NOT NULL, password varchar(20) NOT NULL, PRIMARY KEY (email) );"
+#mysql nimble -e "CREATE TABLE mail_users (email varchar(80) NOT NULL, password varchar(20) NOT NULL, PRIMARY KEY (email) );"
 
 #Create a transports table with the following command:
-mysql nimble -e "CREATE TABLE mail_transport ( domain varchar(128) NOT NULL default '', transport varchar(128) NOT NULL default '', UNIQUE KEY domain (domain) );"
+#mysql nimble -e "CREATE TABLE mail_transport ( domain varchar(128) NOT NULL default '', transport varchar(128) NOT NULL default '', UNIQUE KEY domain (domain) );"
 
 
 echo Copying some configuration templates into place

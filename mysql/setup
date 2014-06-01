@@ -76,6 +76,7 @@ NIMBLEDB=$(mysql -e 'show databases' | grep -c ^nimble$)
 if [ "$NIMBLEDB" == "0" ]; then
 	echo Creating nimble database
 	mysql -e 'create database nimble'
+	mysql nimble < /nimble/templates/nimble.sql
 fi
 
 NIMBLE_PASS=$(openssl rand -base64 12)
@@ -89,3 +90,5 @@ mysql -e "DROP USER 'nimble'@'127.0.0.1';"
 mysql -e "GRANT ALL PRIVILEGES ON *.* TO nimble@localhost IDENTIFIED BY '$NIMBLE_PASS_SAFE' WITH GRANT OPTION;"
 mysql -e "GRANT ALL PRIVILEGES ON *.* TO nimble@127.0.0.1 IDENTIFIED BY '$NIMBLE_PASS_SAFE' WITH GRANT OPTION;"
 mysql -e "flush privileges;";
+
+

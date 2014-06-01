@@ -47,5 +47,9 @@ ob_start();
 $xtpl = new XTemplate(BASEPATH.'/template/overall.tpl');
 
 
+// User variable
+$user = $db->openTable('users');
+$user->loggedIn();
+
 $xtpl->parse('header');
 $xtpl->out('header');
