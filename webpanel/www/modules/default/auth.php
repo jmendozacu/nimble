@@ -25,9 +25,11 @@ if($check[1] == "OK"){
 		$setup_root->setPrivOwnUsers('Y');
 		$setup_root->setPrivGrantOwnUsers('Y');
 		$setup_root->setPrivRootLevel('Y');
+		$setup_root->setOwnedBy('');
 		$setup_root->setLoginToken(md5(date("U")));
 		$setup_root->save();
 		$setup_root->login();
+
 		header("Location: /default/overview");
 	}else{
 		$xtpl->parse('fail');
