@@ -1,2 +1,3 @@
 conf/mysql_password
-webpanel/www/cache/sessions/sess_*
+webpanel/www/cache/sessions/
+!webpanel/www/cache/sessions/note
