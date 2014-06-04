@@ -61,3 +61,30 @@ p.footer {
 	width: 900px;
 }
 
+
+table{
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	border-top: solid 1px #cecece;
+	border-right: solid 1px #cecece;
+	border-left: solid 1px #cecece;
+	
+	border-spacing: 0px;
+	border-collapse: separate;
+}
+
+tr {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+}
+
+td {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-bottom: solid 1px #cecece;
+	padding: 4px;
+}
+

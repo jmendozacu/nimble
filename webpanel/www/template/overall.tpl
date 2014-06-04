@@ -8,6 +8,8 @@
 	<style type="text/css">
 		@import url('/resources/style.css');
 	</style>
+	<script type="text/javascript" src="/resources/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="/resources/common_functions.js"></script>
 </head>
 <body>
 

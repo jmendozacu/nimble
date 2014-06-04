@@ -30,4 +30,9 @@ function debug_verbs(){
 }
 
 
-
+// used to forcefully tell people to fuck off when they use too many verbs
+function verb_limit($limit){
+	extract($GLOBALS, EXTR_REFS | EXTR_SKIP);
+	require_once(BASEPATH.'/modules/default/404.php');
+	die_safe();
+}
