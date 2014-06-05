@@ -16,7 +16,7 @@
 						<td><input type="text" maxlength="25" name="email_address"></td>
 					</tr>
 					
-					<tr><td colspan="2"><input type="checkbox" name="login_email"> Send login details to email address?</td></tr>
+					<tr><td colspan="2"><input type="checkbox" name="send_email"> Send login details to email address?</td></tr>
 					<tr>
 						<td><b>Password:</b></td>
 						<td><b>Retype Password:</b></td>

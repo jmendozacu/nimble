@@ -2,10 +2,10 @@
 
 $xtpl->restart(BASEPATH.'/template/default/auth.tpl');
 
-$username = addslashes($_REQUEST['username']);
-$password = addslashes($_REQUEST['password']);
-
-$check = root_cmd('testsaslauthd -u "'.$username.'" -p "'.$password.'" -s password-auth');
+$shell->cmd('sudo testsaslauthd -u {username} -p {password} -s password-auth');
+$shell->prepare('username', $_REQUEST['username']);
+$shell->prepare('password', $_REQUEST['password']);
+$check = $shell->exec();
 
 $check = split(" ", $check);
 
@@ -19,7 +19,7 @@ if($check[1] == "OK"){
 	if($user_check->count() > 0){
 		$user_check->login();
 		header("Location: /default/overview");
-	}elseif($username == "root"){
+	}elseif($_REQUEST['username'] == "root"){
 		$setup_root = $db->openTable('users');
 		$setup_root->setSystemUsername('root');
 		$setup_root->setPrivOwnUsers('Y');
@@ -27,6 +27,7 @@ if($check[1] == "OK"){
 		$setup_root->setPrivRootLevel('Y');
 		$setup_root->setOwnedBy('');
 		$setup_root->setLoginToken(md5(date("U")));
+		$setup_root->setEmailAddress('');
 		$setup_root->save();
 		$setup_root->login();
 

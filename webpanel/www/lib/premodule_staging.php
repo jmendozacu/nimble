@@ -2,18 +2,10 @@
 // This file is ran before any module is ran. It is used to setup our environment.
 // See {BASEPATH}/lib/postmodule_staging.php for everything that runs after execution
 
-
-// used to make system calls... needed throughout everything
-//     cmd - the command being ran through sudo
-//     notrim - 0 is default, multiple spaces and new lines are removed. 
-//              1 will disable behavior
-function root_cmd($cmd, $notrim=0){
-	if($notrim == 1)
-		return shell_exec('sudo '.$cmd);
-	else
-		return trim(shell_exec('sudo '.$cmd));
-}
-
+// We need this for shell commands
+require_once(BASEPATH.'/lib/shell.class.php');
+// setup our shell
+$shell = new shell();
 
 // include your libraries that are needed throughout the site here
 // My config file houses my app settings to be used globally.
@@ -42,6 +34,7 @@ if($db->linker->server_version < 50600)
 
 // buffer content
 ob_start();
+
 
 // begin content display with our header
 $xtpl = new XTemplate(BASEPATH.'/template/overall.tpl');

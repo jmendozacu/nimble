@@ -4,10 +4,17 @@
 $APP_CONF = array();
 
 // Below are our MySQL settings if we initiate mysql in lib/premodule_staging.php and lib/postmodule_staging.php
+// Preparing a statement to get the nimble password
+$shell->cmd('sudo cat /nimble/conf/mysql_password');
+// Setting our hostname
 $APP_CONF['dbhost'] = 'localhost';
+// Setting nimble username
 $APP_CONF['dbuser'] = 'nimble';
-$APP_CONF['dbpass'] = root_cmd('cat /nimble/conf/mysql_password');
+// getting that magical password 
+$APP_CONF['dbpass'] = $shell->exec();
+// setting the username
 $APP_CONF['dbname'] = 'nimble';
+// optional
 $APP_CONF['dbport'] = null;
 $APP_CONF['dbsock'] = null;
 
