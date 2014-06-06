@@ -44,6 +44,7 @@ if($user->getPrivRootLevel() == 'Y'){
 			$PERM_STRING .= "R ";
 		$xtpl->assign('permission_string', $PERM_STRING);
 		$xtpl->assign('system_username',$owned_users->getSystemUsername());
+		$xtpl->assign('nimble_id',$owned_users->getNimbleId());
 		$xtpl->parse('users_interface.user_row');
 
 	}while($owned_users->next());

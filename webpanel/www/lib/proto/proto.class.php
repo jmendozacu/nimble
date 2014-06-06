@@ -104,14 +104,6 @@ class Proto {
 	
 	// This will begin using our mapped out table file
 	public function openTable($table){
-		// update which table is loaded
-		$this->open_table = $table;
-		
-		// clear all current anonymous functions and used variables
-		$this->actions = array();
-		$this->join_fragment = '';
-		$this->limit_fragment = '';
-		
 		// load our tables file. It may include functions for special uses
 		if(file_exists(PROTO_PATH.'/tables/'.$table.'.php')){
 		
@@ -130,7 +122,8 @@ class Proto {
 			
 			return $tmp_new;
 		}else{
-			return $this;
+			echo 'Table class not found.';
+			return false;
 		}
 	}
 	
@@ -219,6 +212,13 @@ class Proto {
 		return true;
 	}
 	
+	// used to delete current record
+	public function delete(){
+			// DELETE FROM table WHERE col = val
+			$final_statement = 'DELETE FROM `'.$this->open_table.'` WHERE `'.$this->primary_key.'` = "'.$this->current_row_data[$this->primary_key].'";';
+			$this->linker->query($final_statement);
+	}
+
 	// Used to both insert and update
 	public function save(){
 		// New data needs to be inserted
@@ -263,7 +263,6 @@ class Proto {
 			}
 			
 			$final_statement .= ' WHERE `'.$this->primary_key.'` = "'.$this->current_row_data[$this->primary_key].'";';
-			
 			$this->linker->query($final_statement);
 		}
 	}

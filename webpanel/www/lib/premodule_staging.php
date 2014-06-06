@@ -42,7 +42,23 @@ $xtpl = new XTemplate(BASEPATH.'/template/overall.tpl');
 
 // User variable
 $user = $db->openTable('users');
-$user->loggedIn();
+$user->loggedIn_Init();
+
+if($user->loggedIn() && isset($_COOKIE['su'])){
+	$su_lookup = $db->openTable('users');
+	$su_lookup->getDataBySystemUsername($_COOKIE['su']);
+	if($su_lookup->count()){
+		if($su_lookup->checkOwnership($user->getSystemUsername())){
+			$su_lookup->loggedin = true;
+			$user = $su_lookup;
+		}
+	}
+}
+
+if($user->loggedIn()){
+	$xtpl->assign('loggedinas_username', $user->getSystemUsername());
+	$xtpl->parse('header.nav');
+}
 
 $xtpl->parse('header');
 $xtpl->out('header');

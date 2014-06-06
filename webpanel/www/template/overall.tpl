@@ -13,6 +13,13 @@
 </head>
 <body>
 
+<!-- BEGIN: nav -->
+<div id="nav">
+	<a href="/">Mainpage</a> |
+	<a href="/default/settings">Settings</a> |
+	<a href="/default/logout" onclick="return confirm('Are you sure you want to logout?')">Logout [{loggedinas_username}]</a>
+</div>
+<!-- END: nav -->
 <div id="container">
 <!-- END: header -->
 <!-- BEGIN: footer -->
