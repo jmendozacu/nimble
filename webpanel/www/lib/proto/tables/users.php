@@ -54,15 +54,15 @@ class users extends Proto {
 	// Unset the cookies!!!
 	public function logout(){
 		if($this->loggedIn()){
-			if(isset($_COOKIE['su'])){
-				setcookie("su", " ", null, '/', null, false, false);
+			if(isset($_COOKIE['su']) && $_COOKIE['su'] != ''){
+				setcookie("su", "", null, '/', null, false, false);
 			}else{
 				$login_token = md5(rand(1,1000000).date("U").$this->getSystemUsername());
 				$this->setLoginToken($login_token);
 				$this->save();
 
-				setcookie("user", " ", null, '/', null, false, false);
-				setcookie("token", " ", null, '/', null, false, false);
+				setcookie("user", "", null, '/', null, false, false);
+				setcookie("token", "", null, '/', null, false, false);
 			}
 		}
 	}

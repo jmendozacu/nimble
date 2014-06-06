@@ -4,6 +4,10 @@
 <div id="body">
 		<div class="boxedin">
 		<p>Edit your settings below.</p>
+
+		<!-- BEGIN: action -->
+		<p>{action}</p>
+		<!-- END: action -->
 		<form method="post" action="/default/settings">
 			<table style="width: 400px; margin-left: auto; margin-right: auto;">
 				<tr><td colspan="2"><b>Email:</b></td></tr>
