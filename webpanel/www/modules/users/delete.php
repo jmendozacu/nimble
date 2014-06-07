@@ -32,7 +32,7 @@ if(!$edit_user->checkOwnership($user->getSystemUsername()) && $user->getPrivRoot
 }else{ // all looked good
 
 	// delete the linux user
-	$shell->cmd('sudo userdel {username}');
+	$shell->cmd('sudo userdel --force --remove {username}');
 	$shell->prepare('username', $sysusername);
 	$shell->exec();
 	

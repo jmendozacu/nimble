@@ -214,9 +214,13 @@ class Proto {
 	
 	// used to delete current record
 	public function delete(){
-			// DELETE FROM table WHERE col = val
-			$final_statement = 'DELETE FROM `'.$this->open_table.'` WHERE `'.$this->primary_key.'` = "'.$this->current_row_data[$this->primary_key].'";';
-			$this->linker->query($final_statement);
+		if($this->primary_key == null || $this->primary_key == ''){
+			echo 'Can not use proto::delete() method without a set primary_key for '.$this->open_table;
+			return;
+		}
+		// DELETE FROM table WHERE col = val
+		$final_statement = 'DELETE FROM `'.$this->open_table.'` WHERE `'.$this->primary_key.'` = "'.$this->current_row_data[$this->primary_key].'";';
+		$this->linker->query($final_statement);
 	}
 
 	// Used to both insert and update

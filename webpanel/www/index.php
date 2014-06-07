@@ -57,7 +57,7 @@ for($c=0;$c<$verb_count;$c++){
 // Dirty pirate hookers trying to break the sandbox - We stop them
 $mod_page = realpath($mod_page);
 // Prepage a regex safe copy of BASEPATH.'/modules/'
-$regex_safe_path = str_replace('/', '\/', BASEPATH.'/modules/');
+$regex_safe_path = preg_quote(BASEPATH.'/modules/', '/');
 // Compare our regex to $mod_page
 $directory_restriction_check = preg_match('/^'.$regex_safe_path.'/', $mod_page);
 // Match our regulare expression or get the 404 page!

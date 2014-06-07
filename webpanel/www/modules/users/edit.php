@@ -37,6 +37,7 @@ if($user->getPrivRootLevel() == 'Y')
 if($user->getPrivRootLevel() == 'Y')
 	$xtpl->parse('edit_user.show_priv_root_level');
 
+$xtpl->assign('email_address', $edit_user->getEmailAddress());
 
 $xtpl->parse('edit_user');
 $xtpl->out('edit_user');

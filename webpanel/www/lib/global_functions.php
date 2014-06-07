@@ -29,6 +29,29 @@ function debug_verbs(){
 	echo "</pre>";
 }
 
+function sanitize_path($dir){
+	// Dirty pirate hookers trying to break the sandbox - We stop them
+	$dir = preg_replace('/(\/\.\.$|\/\.\.\/)/i', '/', $dir);
+	$dir = preg_replace('/\/$/i', '', $dir);
+	$dir = preg_replace('/["\']/i', '', $dir);
+
+
+	return $dir;
+}
+
+// Checks to make sure $dir is inside of $chdir.
+function check_path($chdir, $dir){
+	// Dirty pirate hookers trying to break the sandbox - We stop them
+	$dir = sanitize_path($dir);
+
+	// Prepage a regex safe copy of BASEPATH.'/modules/'
+	$regex_safe_path = preg_quote($chdir, '/');
+
+	// Compare our regex to $dir
+	return preg_match('/^'.$regex_safe_path.'/', $dir);
+}
+
+
 
 // used to forcefully tell people to fuck off when they use too many verbs
 function verb_limit($limit){
