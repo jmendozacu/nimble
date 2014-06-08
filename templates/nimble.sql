@@ -52,6 +52,14 @@ CREATE TABLE `mail_users` (
   PRIMARY KEY (`email`),
   KEY `domain` (`domain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `nimble_ipaddr` (
+  `ip_id` int(11) NOT NULL AUTO_INCREMENT,
+  `system_username` varchar(32) NOT NULL,
+  `ipaddr` varchar(16) NOT NULL,
+  PRIMARY KEY (`ip_id`),
+  UNIQUE KEY `system_username_2` (`system_username`),
+  KEY `system_username` (`system_username`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 CREATE TABLE `nimble_users` (
   `nimble_id` int(11) NOT NULL AUTO_INCREMENT,
   `system_username` varchar(32) NOT NULL,
@@ -64,12 +72,17 @@ CREATE TABLE `nimble_users` (
   PRIMARY KEY (`nimble_id`),
   KEY `owned_by` (`owned_by`),
   KEY `system_username` (`system_username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 CREATE TABLE `website_vhosts` (
   `vhost_id` int(11) NOT NULL AUTO_INCREMENT,
   `system_username` varchar(32) NOT NULL,
-  `domain` varchar(200) NOT NULL,
+  `domain` varchar(254) NOT NULL,
   `documentroot` text NOT NULL,
+  `ipaddr` varchar(16) NOT NULL,
+  `ssl_certificate` longtext NOT NULL,
+  `ssl_key` longtext NOT NULL,
+  `ssl_ca_certificate` longtext NOT NULL,
   PRIMARY KEY (`vhost_id`),
-  KEY `system_username` (`system_username`,`domain`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `domain` (`domain`),
+  KEY `system_username` (`system_username`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
