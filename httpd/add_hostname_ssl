@@ -43,6 +43,11 @@ if [ ! -f /etc/pki/tls/certs/$HOSTNAME.ca.crt ]; then
 	sed -i -e 's:SSLCACertificateFile:#SSLCACertificateFile:g' /dev/shm/$HOSTNAME-ssl.conf
 fi
 
+# verify CA bundle
+if [ ! `grep CERTIFICATE /etc/pki/tls/certs/$HOSTNAME.ca.crt -q` ]; then
+	sed -i 's/SSLCACertificateFile/#SSLCACertificateFile/g' /dev/shm/$HOSTNAME-ssl.conf
+fi
+
 # Move our temporary conf file into the vhosts.d
 cp -fv /dev/shm/$HOSTNAME-ssl.conf /etc/httpd/vhosts.d/$HOSTNAME-ssl.conf
 

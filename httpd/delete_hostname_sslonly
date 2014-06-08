@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Human readable variabled
+HOSTNAME=$1
+
+# Make sure people don't fuck up
+if [ "$HOSTNAME" == "" ]; then
+	echo
+	echo
+	echo
+	echo Used to deleted a SSL hostname from /etc/httpd/vhosts.d/
+	echo
+	echo Usage:
+	echo
+	echo $0 HOSTNAME
+	echo
+	echo
+fi
+
+# Remove the virtual host
+rm -rfv /etc/httpd/vhosts.d/$HOSTNAME-ssl.conf
+rm -rfv /etc/httpd/vhosts.d/$HOSTNAME-ssl.suspended
+
+# Remove the virtual host log files
+find /var/log/httpd/ -name $HOSTNAME-ssl-access_log -o -name $HOSTNAME-ssl-error_log | awk '{print "rm -rfv "$0}' | sh
+
+find /etc/pki/tls/ -name $HOSTNAME.crt -o -name $HOSTNAME.ca.crt -o -name $HOSTNAME.key
+
+# reload apache to recognize changes
+if [ -f /var/run/httpd/httpd.pid ]; then
+	service httpd reload
+fi

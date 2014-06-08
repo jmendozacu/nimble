@@ -75,6 +75,7 @@ if(!$fail){
 	$vhost->setSystemUsername($user->getSystemUsername());
 	$vhost->setDocumentroot($documentroot);
 	$vhost->setIpaddr('');
+	$vhost->setSslEnabled('N');
 	$vhost->setSslCertificate('');
 	$vhost->setSslKey('');
 	$vhost->setSslCaCertificate('');
