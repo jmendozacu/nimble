@@ -41,6 +41,31 @@ mydns mydns-mysql \
 dovecot dovecot-mysql
 
 
+# We don't like selinux... apache runs as multiple users... this is a multi-user system... and I'm lazy
+setenforce 0
+sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux
+
+
+# Allow our services to be accessible through the firewall.
+
+iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+iptables -I INPUT -p tcp --dport 443 -j ACCEPT
+iptables -I INPUT -p tcp --dport 1337 -j ACCEPT
+iptables -I INPUT -p tcp --dport 1338 -j ACCEPT
+iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
+
+
+iptables -I INPUT -p tcp --dport 22 -j ACCEPT
+iptables -I INPUT -p tcp --dport 25 -j ACCEPT
+iptables -I INPUT -p tcp --dport 110 -j ACCEPT
+iptables -I INPUT -p tcp --dport 143 -j ACCEPT
+iptables -I INPUT -p tcp --dport 487 -j ACCEPT
+iptables -I INPUT -p tcp --dport 993 -j ACCEPT
+iptables -I INPUT -p tcp --dport 995 -j ACCEPT
+
+service iptables save
+
+
 # start or restart sasl... we fucking want this to run.
 if [ -f /var/run/saslauthd/saslauthd.pid ]; then
 	service saslauthd restart

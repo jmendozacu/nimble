@@ -3,17 +3,18 @@
 # Set some variables for readability... self-explanatory stuff
 USERNAME=$1
 HOSTNAME=$2
-IPADDR=$3
+DOCUMENTROOT=$3
+IPADDR=$4
 
 
 # make sure people aren't being stupid
-if [ "$USERNAME" == "" ] || [ "$HOSTNAME" == "" ] || [ "$IPADDR" == ""]; then
+if [ "$USERNAME" == "" ] || [ "$HOSTNAME" == "" ]  || [ "$DOCUMENTROOT" == "" ] || [ "$IPADDR" == ""]; then
 	echo
 	echo
 	echo This script is used to create new vhosts in /etc/httpd/vhosts.d/
 	echo
 	echo Usage:
-	echo $0 USERNAME HOSTNAME IPADDR
+	echo $0 USERNAME HOSTNAME DOCUMENTROOT IPADDR
 	echo
 	echo
 	echo
@@ -34,6 +35,7 @@ cp -fv /nimble/templates/httpd/vhost-ssl.conf /dev/shm/$HOSTNAME-ssl.conf
 # set the username and hostname in the temporary conf file
 sed -i -e 's:__USERNAME__:'$USERNAME':g' /dev/shm/$HOSTNAME-ssl.conf
 sed -i -e 's:__HOSTNAME__:'$HOSTNAME':g' /dev/shm/$HOSTNAME-ssl.conf
+sed -i -e 's:__DOCUMENTROOT__:'$DOCUMENTROOT':g' /dev/shm/$HOSTNAME-ssl.conf
 sed -i -e 's:__IPADDR__:'$IPADDR':g' /dev/shm/$HOSTNAME-ssl.conf
 
 # if our ca bundle doesn't exists, we will just comment out that line

@@ -3,16 +3,17 @@
 # Set some variables for readability... self-explanatory stuff
 USERNAME=$1
 HOSTNAME=$2
+DOCUMENTROOT=$3
 
 
 # make sure people aren't being stupid
-if [ "$USERNAME" == "" ] || [ "$HOSTNAME" == "" ]; then
+if [ "$USERNAME" == "" ] || [ "$HOSTNAME" == "" ] || [ "$DOCUMENTROOT" == "" ]; then
 	echo
 	echo
 	echo This script is used to create new vhosts in /etc/httpd/vhosts.d/
 	echo
 	echo Usage:
-	echo $0 USERNAME HOSTNAME
+	echo $0 USERNAME HOSTNAME DOCUMENTROOT
 	echo
 	echo
 	echo
@@ -25,6 +26,7 @@ cp -fv /nimble/templates/httpd/vhost.conf /dev/shm/$HOSTNAME.conf
 # set the username and hostname in the temporary conf file
 sed -i -e 's:__USERNAME__:'$USERNAME':g' /dev/shm/$HOSTNAME.conf
 sed -i -e 's:__HOSTNAME__:'$HOSTNAME':g' /dev/shm/$HOSTNAME.conf
+sed -i -e 's:__DOCUMENTROOT__:'$DOCUMENTROOT':g' /dev/shm/$HOSTNAME.conf
 
 
 # Move our temporary conf file into the vhosts.d
