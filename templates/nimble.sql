@@ -27,30 +27,37 @@ CREATE TABLE `dns_soa` (
   UNIQUE KEY `origin` (`origin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE `mail_domains` (
+  `domain_id` int(11) NOT NULL AUTO_INCREMENT,
   `domain` varchar(255) NOT NULL,
-  PRIMARY KEY (`domain`)
+  `system_username` varchar(32) NOT NULL,
+  PRIMARY KEY (`domain_id`),
+  KEY `domain` (`domain`),
+  KEY `system_username` (`system_username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE `mail_forwardings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `source` varchar(80) NOT NULL,
   `destination` text NOT NULL,
   `domain` varchar(200) NOT NULL,
-  PRIMARY KEY (`source`),
-  KEY `domain` (`domain`)
+  PRIMARY KEY (`id`),
+  KEY `domain` (`domain`),
+  KEY `source` (`source`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE `mail_transport` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `domain` varchar(128) NOT NULL DEFAULT '',
   `transport` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `domain` (`domain`),
-  KEY `domain_2` (`domain`)
+  UNIQUE KEY `domain` (`domain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE `mail_users` (
+  `email_id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(80) NOT NULL,
   `password` varchar(20) NOT NULL,
   `domain` varchar(200) NOT NULL,
-  PRIMARY KEY (`email`),
-  KEY `domain` (`domain`)
+  PRIMARY KEY (`email_id`),
+  KEY `domain` (`domain`),
+  KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE `nimble_ipaddr` (
   `ip_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -79,6 +86,7 @@ CREATE TABLE `website_vhosts` (
   `domain` varchar(254) NOT NULL,
   `documentroot` text NOT NULL,
   `ipaddr` varchar(16) NOT NULL,
+  `ssl_enabled` enum('Y','N') NOT NULL,
   `ssl_certificate` longtext NOT NULL,
   `ssl_key` longtext NOT NULL,
   `ssl_ca_certificate` longtext NOT NULL,
