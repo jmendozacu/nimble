@@ -16,6 +16,9 @@ mkdir -p /etc/httpd/vhosts.d
 # Ensure welcome.conf is empty
 echo > /etc/httpd/conf.d/welcome.conf
 
+# Fuck you default ssl.conf file! We're stopping you from being the default SSL.
+sed -i 's/<VirtualHost.*:443>/<VirtualHost 127.0.0.1:443>/g'  /etc/httpd/conf.d/ssl.conf
+
 # Ensure apache is enabled on boot
 chkconfig httpd on
 
