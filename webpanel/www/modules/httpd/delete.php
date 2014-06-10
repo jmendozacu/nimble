@@ -6,7 +6,10 @@ $xtpl->restart(BASEPATH.'/template/list.tpl');
 $shell->cmd("getent passwd {username} | awk -F: '{print $6}'");
 $shell->prepare('username', $user->getSystemUsername());
 $homedir = $shell->exec().'/';
-$documentroot = sanitize_path( $_REQUEST['documentroot']);
+if(isset($_REQUEST['documentroot']))
+	$documentroot = sanitize_path( $_REQUEST['documentroot']);
+else
+	$documentroot = '';
 
 $fail = false;
 

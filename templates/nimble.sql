@@ -33,7 +33,7 @@ CREATE TABLE `mail_domains` (
   PRIMARY KEY (`domain_id`),
   KEY `domain` (`domain`),
   KEY `system_username` (`system_username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 CREATE TABLE `mail_forwardings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `source` varchar(80) NOT NULL,
@@ -52,13 +52,13 @@ CREATE TABLE `mail_transport` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE `mail_users` (
   `email_id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(80) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password` varchar(20) NOT NULL,
-  `domain` varchar(200) NOT NULL,
+  `domain` varchar(255) NOT NULL,
   PRIMARY KEY (`email_id`),
   KEY `domain` (`domain`),
   KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 CREATE TABLE `nimble_ipaddr` (
   `ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `system_username` varchar(32) NOT NULL,
@@ -93,4 +93,4 @@ CREATE TABLE `website_vhosts` (
   PRIMARY KEY (`vhost_id`),
   KEY `domain` (`domain`),
   KEY `system_username` (`system_username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;

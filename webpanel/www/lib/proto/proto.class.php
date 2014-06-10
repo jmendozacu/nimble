@@ -6,6 +6,7 @@ class Proto {
 	public $linker = null;
 	
 	private $current_row_data = array();
+	private $current_row_data_function = array();
 	private $current_row_data_modified = array();
 	private $fetch_data = array();
 	private $actions = array();
@@ -61,6 +62,9 @@ class Proto {
 				$this->current_row_data[$method] = $arguments[0];
 				// Used so that we don't over do it when using save()
 				$this->current_row_data_modified[$method] = $arguments[0];
+				// Used to do simple 1 parameter functions
+				if(isset($arguments[1]))
+					$this->current_row_data_function[$method] = $arguments[1];
 			}
 			return false;
 		}
@@ -83,6 +87,9 @@ class Proto {
 				$this->current_row_data[$method] = $arguments[0];
 				// Used so that we don't over do it when using save()
 				$this->current_row_data_modified[$method] = $arguments[0];
+				// Used to do simple 1 parameter functions
+				if(isset($arguments[1]))
+					$this->current_row_data_function[$method] = $arguments[1];
 			}
 			return false;
 		}
@@ -235,8 +242,17 @@ class Proto {
 			foreach($this->current_row_data as $field => $value){
 				$value = $this->linker->escape_string($value);
 
+
+
 				$fields .= ', `'.$field.'`';
-				$values .= ', "'.$value.'"';
+
+
+				// simple function support. 
+				if(isset($this->current_row_data_function[$field]))
+					$values .= ', '.$this->current_row_data_function[$field].'("'.$value.'")';
+				else
+					$values .= ', "'.$value.'"';
+
 			}
 			$final_statement .= "(".$fields.") VALUES (".$values.");";
 			
@@ -258,7 +274,11 @@ class Proto {
 			foreach($this->current_row_data_modified as $field => $value){
 				$value = $this->linker->escape_string($value);
 
-				$final_statement .= ' `'.$field.'` = "'.$value.'"';
+				// simple function support
+				if(isset($this->current_row_data_function[$field]))	
+					$final_statement .= ' `'.$field.'` = '.$this->current_row_data_function[$field].'("'.$value.'")';
+				else
+					$final_statement .= ' `'.$field.'` = "'.$value.'"';
 				
 				if($builds != $changed_fields)
 					$final_statement .= ',';

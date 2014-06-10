@@ -12,11 +12,10 @@
 		</tr>
 		<!-- BEGIN: row -->
 		<tr>
-			<td>{system_username}</td>
-			<td>{permission_string}</td>
+			<td>{domainname}</td>
 			<td style="width: 220px;">
-				<a href="/users/su/{nimble_id}">Manage Email Accounts</a> |
-				<a href="/users/delete/{nimble_id}" onclick="return confirm('Are you sure you want to delete {system_username}?')">Delete</a>
+				<a href="/email/manage/{domain_id}">Manage Email Accounts</a> |
+				<a href="/email/delete/{domain_id}" onclick="return confirm('Are you sure you want to delete {domainname} and all associated email and settings?')">Delete</a>
 			</td>
 		</tr>
 		<!-- END: row -->

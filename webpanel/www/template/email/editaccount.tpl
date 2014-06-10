@@ -1,0 +1,38 @@
+<!-- BEGIN: editaccount -->
+<h1>Edit Email Account</h1>
+
+<div id="body">
+		<div class="boxedin">
+		<form method="post" action="/email/updateaccount/{domain_id}/{email_id}">
+			<table style="width: 400px; margin-left: auto; margin-right: auto;">
+				<tr>
+					<td><b>Email User:</b></td>
+				</tr>
+				<tr>
+					<td>{email}</td>
+				</tr>
+					
+				<tr>
+					<td><b>Password:</b></td>
+				</tr>
+				<tr>
+					<td><input type="password" name="password"></td>
+				</tr>
+				<tr>
+					<td><b>Retype Password:</b></td>
+				</tr>
+				<tr>
+					<td><input type="password" name="repassword"></td>
+				</tr>
+
+
+				<tr><td colspan="2"><input type="submit" value="Create"> <a href="/email/manage/{domain_id}">Cancel</a></td></tr>
+			</table>
+		</form>
+	
+	</div>
+
+</div>
+
+
+<!-- END: editaccount -->
