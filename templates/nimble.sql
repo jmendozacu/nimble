@@ -10,7 +10,7 @@ CREATE TABLE `dns_rr` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `rr` (`zone`,`name`,`type`,`data`),
   KEY `system_username` (`system_username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 CREATE TABLE `dns_soa` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `origin` char(255) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE `dns_soa` (
   `system_username` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `origin` (`origin`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 CREATE TABLE `mail_domains` (
   `domain_id` int(11) NOT NULL AUTO_INCREMENT,
   `domain` varchar(255) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `mail_domains` (
   PRIMARY KEY (`domain_id`),
   KEY `domain` (`domain`),
   KEY `system_username` (`system_username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 CREATE TABLE `mail_forwardings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `source` varchar(80) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE `mail_users` (
   PRIMARY KEY (`email_id`),
   KEY `domain` (`domain`),
   KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 CREATE TABLE `nimble_ipaddr` (
   `ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `system_username` varchar(32) NOT NULL,

@@ -19,9 +19,9 @@
 			</td>
 		</tr>
 		<!-- END: row -->
-		<!-- BEGIN: no_domains -->
+		<!-- BEGIN: no_rows -->
 		<tr><td colspan="2">You have no domains configured for email. <a href="/email/newdomain">here</a> to add a domain to the mail services.</td></tr>
-		<!-- END: no_domains -->
+		<!-- END: no_rows -->
 	</table>
 
 </div>
