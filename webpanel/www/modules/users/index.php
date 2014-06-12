@@ -20,7 +20,17 @@ function iterate_owned_users($system_username){
 		return;
 
 	do {
-		echo $owned_users->getSystemUsername();
+		$PERM_STRING = "";
+		if($owned_users->getPrivOwnUsers() == 'Y')
+			$PERM_STRING .= "O ";
+		if($owned_users->getPrivGrantOwnUsers() == 'Y')
+			$PERM_STRING .= "G ";
+		if($owned_users->getPrivRootLevel() == 'Y')
+			$PERM_STRING .= "R ";
+		$xtpl->assign('permission_string', $PERM_STRING);
+		$xtpl->assign('system_username',$owned_users->getSystemUsername());
+		$xtpl->assign('nimble_id',$owned_users->getNimbleId());
+		$xtpl->parse('users_interface.user_row');
 		iterate_owned_users($owned_users->getSystemUsername());
 	}while($owned_users->next());
 	

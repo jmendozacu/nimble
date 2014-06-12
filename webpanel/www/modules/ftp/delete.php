@@ -24,7 +24,7 @@ if(!$edit_user->count() || $edit_user->getSystemUsername() != $user->getSystemUs
 	$sysusername = $edit_user->getFtpusername();
 
 	// delete the linux user
-	$shell->cmd('sudo userdel --force --remove {username}');
+	$shell->cmd('sudo userdel {username}');
 	$shell->prepare('username', $sysusername);
 	$shell->exec();
 	

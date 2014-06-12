@@ -59,6 +59,7 @@ if($zone->count() && $zone->getSystemUsername() == $user->getSystemUsername()){
 				$records->setType($urecord['type']);
 				$records->setAux($urecord['aux']);
 				$records->setTtl($urecord['ttl']);
+				$records->setSystemUsername($user->getSystemUsername());
 				$records->save();
 
 				$xtpl->assign('action', 'Saved record "'.$urecord['name'].'".');
@@ -103,6 +104,7 @@ if($zone->count() && $zone->getSystemUsername() == $user->getSystemUsername()){
 			$record->setType($urecord['type']);
 			$record->setAux($urecord['aux']);
 			$record->setTtl($urecord['ttl']);
+			$record->setSystemUsername($user->getSystemUsername());
 			$record->save();
 
 			$xtpl->assign('action', 'Saved new record "'.$urecord['name'].'".');
