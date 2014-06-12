@@ -59,6 +59,14 @@ CREATE TABLE `mail_users` (
   KEY `domain` (`domain`),
   KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+CREATE TABLE `nimble_ftpusers` (
+  `ftpuser_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ftpusername` varchar(32) NOT NULL,
+  `homedir` varchar(255) NOT NULL,
+  `system_username` varchar(32) NOT NULL,
+  PRIMARY KEY (`ftpuser_id`),
+  KEY `ftpusername` (`ftpusername`,`system_username`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 CREATE TABLE `nimble_ipaddr` (
   `ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `system_username` varchar(32) NOT NULL,

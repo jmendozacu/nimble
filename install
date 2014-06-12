@@ -38,7 +38,8 @@ httpd httpd-devel libcap-devel mod_ssl \
 mysql-server mysql \
 php php-devel php-fpm php-mysql php-gd php-mcrypt php-xmlrpc php-xml php-mbstring php-pear \
 mydns mydns-mysql \
-postfix dovecot dovecot-mysql
+postfix dovecot dovecot-mysql \
+vsftpd
 
 
 # We don't like selinux... apache runs as multiple users... this is a multi-user system... and I'm lazy
@@ -55,6 +56,7 @@ iptables -I INPUT -p tcp --dport 1338 -j ACCEPT
 iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
 
 
+iptables -I INPUT -p tcp --dport 21 -j ACCEPT
 iptables -I INPUT -p tcp --dport 22 -j ACCEPT
 iptables -I INPUT -p tcp --dport 25 -j ACCEPT
 iptables -I INPUT -p tcp --dport 110 -j ACCEPT
@@ -91,6 +93,9 @@ yum -y replace mysql --replace-with mysql56u
 
 # setup mail
 /nimble/mail/setup
+
+# setup ftp
+/nimble/vsftpd/setup
 
 # setup nimble webpanel
 /nimble/webpanel/setup

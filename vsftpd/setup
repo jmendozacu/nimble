@@ -1,1 +1,10 @@
 #!/bin/bash
+chkconfig vsftpd on
+
+sed -i '/chroot_local_user=/c\chroot_local_user=YES' /etc/vsftpd/vsftpd.conf
+if ! grep ^chroot_local_user /etc/vsftpd/vsftpd.conf | grep YES; then
+	echo Ensuring VSFTPD is chrooted.
+	echo 'chroot_local_user=YES' >> /etc/vsftpd/vsftpd.conf
+fi
+
+service vsftpd restart
