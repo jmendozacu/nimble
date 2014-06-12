@@ -58,6 +58,9 @@ if(isset($mod_verbs[2])){
 	$check_exists = $shell->exec();
 	if($check_exists != "")
 		$creation_errors[] = 'User "'.$_REQUEST['username'].'" already exists.';
+
+	if(strlen($_REQUEST['username']) > 8)
+		$creation_errors[] = 'Username is limited to no more than 8 characters in length.';
 }
 
 

@@ -1,7 +1,7 @@
 Nimble 6
 ========
 By Sam Peterson <sam.igknighted@gmail.com>
-Thanks to NOXOiD (https://github.com/deathseeker41) for break testing features
+Thanks to NOXOiD (https://github.com/deathseeker41) for testing and feedback
 
 A lightweight tool for managing a server for webhosting. Nimble manages
 a webserver and email platform. User management is Linux centric.

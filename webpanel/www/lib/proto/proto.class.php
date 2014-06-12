@@ -147,6 +147,28 @@ class Proto {
 			$this->prepared[$var] = $val;
 		}
 	}
+
+	public function rawQuery($query, $autonext = true){
+		// Sanitize that shizzzzz if there are things to fill in from $this->prepared
+		if(count($this->prepared) > 0){
+			foreach($this->prepared as $key => $val){
+				$val_sanitized = $this->linker->escape_string($val);
+				$query = str_replace('{'.$key.'}', $val_sanitized, $query);
+			}
+			// Empty this out now!
+			$this->prepared = array();
+		}
+
+		$this->last_query = $query;
+		$this->last_query_result = $this->linker->query($query);
+
+		if(!$this->last_query_result){
+			echo "MySQL Error: ".$this->linker->error."<br>\n";
+		}
+
+		if($autonext && $this->count() > 0)
+			$this->next();
+	}
 	
 	// Used with MySQL fragments to find data in the open table
 	// Note: this is not a sanitized function...
@@ -185,6 +207,7 @@ class Proto {
 	{
 		if(!$this->last_query_result)
 			return 0;
+
 		return $this->last_query_result->num_rows;
 	}
 	
@@ -203,7 +226,8 @@ class Proto {
 	// iterates to the next row in our last query set
 	public function next()
 	{
-		$this->current_row_data = $this->last_query_result->fetch_assoc();
+		//$this->current_row_data = $this->last_query_result->fetch_assoc();
+		$this->current_row_data = $this->last_query_result->fetch_array();
 		$this->current_row_data_modified = array();
 
 		// return false if we're done providing data
