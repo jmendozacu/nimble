@@ -6,7 +6,7 @@
 		<p><input type="text" name="username"></p>
 		<p>Password:</p>
 		<p><input type="password" name="password"></p>
-		<p><input type="submit" value="Login"></p>
+		<p><input type="submit" value="Login"> <a href="/default/lostpassword">Lost Password</a></p>
 	</form>
 </div>
 <!-- END: login -->
