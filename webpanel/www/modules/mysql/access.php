@@ -88,11 +88,13 @@ $db->prepare('database', $dbname);
 $db->rawQuery("SELECT * FROM mysql.db WHERE Db='{database}';");
 
 if($db->count()){
-	$xtpl->assign('dbuser', $db->get_User());
-	$xtpl->assign('hostname', $db->get_Host());
-	$xtpl->assign('dbuser_url', urlencode($db->get_User()));
-	$xtpl->assign('hostname_url', urlencode($db->get_Host()));
-	$xtpl->parse('mysqlaccess.row');
+	do{
+		$xtpl->assign('dbuser', $db->get_User());
+		$xtpl->assign('hostname', $db->get_Host());
+		$xtpl->assign('dbuser_url', urlencode($db->get_User()));
+		$xtpl->assign('hostname_url', urlencode($db->get_Host()));
+		$xtpl->parse('mysqlaccess.row');
+	}while($db->next());
 }else{
 	$xtpl->parse('mysqlaccess.no_rows');
 }
